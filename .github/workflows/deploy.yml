@@ -2,8 +2,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      HOST: 54.196.54.179  # Your server IP address
-      PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Ensure this is set in GitHub Secrets
+      HOST: 54.196.54.179
+      PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
     steps:
       - name: Checkout repository
@@ -21,8 +21,13 @@ jobs:
       - name: Build the project
         run: npm run build
 
+      - name: Debug environment variables
+        run: |
+          echo "HOST is: $HOST"  # Print the value of the HOST variable
+
       - name: Deploy to server
         run: |
+          echo "Deploying to $HOST"  # Another debug step
           ssh -o StrictHostKeyChecking=no -i "$PRIVATE_KEY" ubuntu@$HOST << 'EOF'
             cd /var/www/html/devoverflow
             git pull origin main
