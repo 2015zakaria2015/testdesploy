@@ -1,30 +1,25 @@
-name: Deploy Next.js App
-
-on:
-  push:
-    branches:
-      - main  # You can change 'main' to the branch you want to deploy from
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      HOST: 54.196.54.179
+      PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Adjust the version as per your project requirements
+          node-version: '16'
 
       - name: Install dependencies
         run: |
-          npm install
+          npm install --legacy-peer-deps
 
-      - name: Build Next.js app
-        run: |
-          npm run build
+      - name: Build the project
+        run: npm run build
 
       - name: Deploy to server
         run: |
