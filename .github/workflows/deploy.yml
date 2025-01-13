@@ -2,8 +2,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      HOST: 54.196.54.179
-      PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      HOST: 54.196.54.179  # Your server IP address
+      PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Ensure this is set in GitHub Secrets
 
     steps:
       - name: Checkout repository
